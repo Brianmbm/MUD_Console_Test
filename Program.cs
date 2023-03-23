@@ -4,6 +4,7 @@ namespace DTP9_MUD_console
 {
     public class Room
     {
+        public static int NoDoor = -997;
         int self;
         string title;
         string text;
@@ -22,10 +23,10 @@ namespace DTP9_MUD_console
         public string Directions { get
             {
                 string dir = "Det går dörrar till:\n";
-                if (north != -1) dir += "  w - norr\n";
-                if (east  != -1) dir += "  d - öster\n";
-                if (south != -1) dir += "  s - söder\n";
-                if (west != -1)  dir += "  a - väster\n";
+                if (north != NoDoor) dir += "  w - norr\n";
+                if (east  != NoDoor) dir += "  d - öster\n";
+                if (south != NoDoor) dir += "  s - söder\n";
+                if (west != NoDoor)  dir += "  a - väster\n";
                 return dir;
             }
         }
@@ -42,22 +43,22 @@ namespace DTP9_MUD_console
                "  l - leta\n" +
                "  h - hjälp\n" +
                "  z - avsluta\n",
-               -1, -1, -1, -1);
+               Room.NoDoor, Room.NoDoor, Room.NoDoor, Room.NoDoor);
         static List<Room> labyrinth = new List<Room>() {
             new Room(0, "Start",
                 "Du står i ett rum med rött\n" +
                 "tegel. Väggarna fladdrar i\n" +
                 "facklornas sken. Du ser en\n" +
                 "hög med tyg nere till vänster. ",
-                N:3, E:-1, S:-1, W:-1),
+                N:3, E:Room.NoDoor, S:Room.NoDoor, W:Room.NoDoor),
             new Room(1, "Lagerrum väst",
                 "Du står i ett rum utan vägar\n" +
                 "framåt. Du ser en hög med\n" +
                 "skräp nere till vänster.",
-                N:-1, E:2, S:-1, W:-1),
+                N:Room.NoDoor, E:2, S:Room.NoDoor, W:Room.NoDoor),
             new Room(2, "Vaktrum väst",
                 "Du står i ett övergivet vaktrum.",
-                N:-1, E: 3, S:-1, W:1),
+                N:Room.NoDoor, E: 3, S:Room.NoDoor, W:1),
             new Room(3, "Korsvägen",
                 "Du står i korsväg. Det går\n" +
                 "gångar i alla riktningar.",
@@ -71,26 +72,26 @@ namespace DTP9_MUD_console
             if (command == "w") {
                 int next = labyrinth[current].North;
                 warning = "";
-                if (next == -1) warning = "du gick in i väggen!\n";
+                if (next == Room.NoDoor) warning = "du gick in i väggen!\n";
                 else current = next;
             }
             else if (command == "s") {
                 int next = labyrinth[current].South;
                 warning = "";
-                if (next == -1) warning = "du gick in i väggen!\n";
+                if (next == Room.NoDoor) warning = "du gick in i väggen!\n";
                 else current = next;
             }
             else if (command == "d") {
                 int next = labyrinth[current].East;
                 warning = "";
-                if (next == -1) warning = "du gick in i väggen!\n";
+                if (next == Room.NoDoor) warning = "du gick in i väggen!\n";
                 else current = next;
             }
             else if (command == "a")
             {
                 int next = labyrinth[current].West;
                 warning = "";
-                if (next == -1) warning = "du gick in i väggen!\n";
+                if (next == Room.NoDoor) warning = "du gick in i väggen!\n";
                 else current = next;
             }
             else if (command == "l")
